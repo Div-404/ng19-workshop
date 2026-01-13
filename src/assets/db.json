@@ -1,4 +1,6 @@
 {
-  "users": [],
+  "users": [
+    { "id": 1, "email": "demo@mail.com", "password": "1234" }
+  ],
   "sessions": []
 }
