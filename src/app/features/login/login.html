@@ -1,8 +1,23 @@
-<h1>Login works!</h1>
-<!-- {{users|json}} -->
+<!-- <h1>Login works!</h1>
 <section>
   <h3>Raw users from JSON-server</h3>
   <ul>
     <li *ngFor="let u of users">{{ u.email }}</li>
   </ul>
+</section> -->
+
+<h1>Login works!</h1>
+
+<section>
+  <h3>Users via AsyncPipe + OnPush</h3>
+  <!-- loading -->
+  @if (users$ | async; as users) {
+    <ul>
+      @for (u of users; track u.id) {
+        <li>{{ u.email }}</li>
+      }
+    </ul>
+  } @else {
+    <p>Loading…</p>
+  }
 </section>
