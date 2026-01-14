@@ -2,10 +2,12 @@
     <div    class="emailclass">
         <label> Email</label>
         <input type="email" formControlName="email"/>
+        <small *ngIf="emailerror$ | async as err" class="error">{{ err }}</small>
     </div>
     <div class="passClass">
         <label>Password</label>
         <input type="password" formControlName="password"/>
+        <small *ngIf="passworderror$ | async as err" class="error">{{ err }}</small>
     </div>
-    <button type="submit" [disabled]="disabled||form.invalid">Login</button>
+    <button type="submit" [disabled]="(valid$ | async) === false">Login</button>
 </form>
