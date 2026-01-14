@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, OnDestroy, OnInit } from '@angular/core';
 import { JsonDataService } from '../../core/services/json-data.service';
 import { User } from '../../shared/models/user';
 import { Observable, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-login',
@@ -14,6 +15,10 @@ import { CommonModule } from '@angular/common';
 })
 export class Login implements OnInit {
   // users: User[] = [];
+  users:any;
+  loading:any;
+  users$!: Observable<User[]>;
+
   // private sub = new Subscription();
   constructor(private service: JsonDataService) {
     // this.sub.add(
@@ -25,10 +30,14 @@ export class Login implements OnInit {
     //     error: (err) => console.error(err)
     //   })
     // );
+     this.users = toSignal(this.service.getUsers(),{initialValue:[]})
+  this.loading = computed(()=> this.users.length == 0)
   }
-  users$!: Observable<User[]>;
+
 ngOnInit(): void {
-  this.users$ = this.service.getUsers();
+//   // this.users$ = this.service.getUsers();
+//   this.users = toSignal(this.service.getUsers(),{initialValue:[]})
+//   this.loading = computed(()=> this.users.length == 0)
 }
 
   // ngOnDestroy(): void {

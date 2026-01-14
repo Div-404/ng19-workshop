@@ -11,7 +11,7 @@
 <section>
   <h3>Users via AsyncPipe + OnPush</h3>
   <!-- loading -->
-  @if (users$ | async; as users) {
+  <!-- @if (users$ | async; as users) {
     <ul>
       @for (u of users; track u.id) {
         <li>{{ u.email }}</li>
@@ -19,5 +19,13 @@
     </ul>
   } @else {
     <p>Loading…</p>
-  }
+  } -->
+    @if(loading()){
+        <p> Getting loaded</p>
+    }
+    <ul>
+        @for(u of users(); track u.id){
+            <li>{{u.email}}</li>
+        }
+    </ul>
 </section>
