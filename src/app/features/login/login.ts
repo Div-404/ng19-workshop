@@ -4,11 +4,12 @@ import { User } from '../../shared/models/user';
 import { Observable, Subscription } from 'rxjs';
 import { CommonModule } from '@angular/common';
 import { toSignal } from '@angular/core/rxjs-interop';
+import { LoginForm } from '../login-form/login-form';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports:[CommonModule, ],
+  imports:[CommonModule, LoginForm],
   templateUrl: './login.html',
   styleUrls: ['./login.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
@@ -40,7 +41,12 @@ ngOnInit(): void {
 //   this.loading = computed(()=> this.users.length == 0)
 }
 
+onLogin(payload: any): void {
+    console.log('[LoginPage] payload', payload);
+    // TODO: authenticate in next segments
+  }
   // ngOnDestroy(): void {
   //   this.sub.unsubscribe();
   // }
+  
 }

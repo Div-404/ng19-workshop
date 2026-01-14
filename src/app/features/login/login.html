@@ -6,7 +6,12 @@
   </ul>
 </section> -->
 
-<h1>Login works!</h1>
+<h1>Login</h1>
+
+<app-login-form
+  [disabled]="false"
+  (submitForm)="onLogin($event)">
+</app-login-form>
 
 <section>
   <h3>Users via AsyncPipe + OnPush</h3>
