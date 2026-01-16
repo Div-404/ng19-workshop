@@ -1,0 +1,16 @@
+<div class="field">
+  <label>{{ label }}</label>
+  <input
+    [type]="type"
+    [value]="value()"
+    (input)="update($any($event).target.value)"
+    (blur)="blur()"
+    [disabled]="disabled()"
+  />
+
+  <small class="error" *ngIf="touched()">
+    <ng-container *ngFor="let e of errors">
+      <span *ngIf="e.key">{{ e.message }}</span>
+    </ng-container>
+  </small>
+</div>

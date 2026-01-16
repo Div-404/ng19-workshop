@@ -1,4 +1,4 @@
-<form class="formClass" [formGroup]="form" (ngSubmit)="onSubmit()">
+<!-- <form class="formClass" [formGroup]="form" (ngSubmit)="onSubmit()">
     <div    class="emailclass">
         <label> Email</label>
         <input type="email" formControlName="email"/>
@@ -10,4 +10,28 @@
         <small *ngIf="passworderror$ | async as err" class="error">{{ err }}</small>
     </div>
     <button type="submit" [disabled]="(valid$ | async) === false">Login</button>
+</form> -->
+
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <app-form-field
+    label="Email"
+    type="email"
+    formControlName="email"
+    [errors]="[
+      { key: form.get('email')?.errors?.['required'], message: 'Email is required' },
+      { key: form.get('email')?.errors?.['email'], message: 'Invalid email format' }
+    ]">
+  </app-form-field>
+
+  <app-form-field
+    label="Password"
+    type="password"
+    formControlName="password"
+    [errors]="[
+      { key: form.get('password')?.errors?.['required'], message: 'Password is required' }
+    ]">
+  </app-form-field>
+
+  <button type="submit" [disabled]="form.invalid">Login</button>
 </form>
