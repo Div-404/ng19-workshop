@@ -28,12 +28,14 @@
   } @else {
     <p>Loading…</p>
   } -->
-    @if(loading()){
+    <!-- @if(loading()){
         <p> Getting loaded</p>
     }
     <ul>
         @for(u of users(); track u.id){
             <li>{{u.email}}</li>
         }
-    </ul>
+    </ul> -->
+    <pre>isLoggedIn: {{ auth.isLoggedIn() | json }}</pre>
+<pre>currentUser: {{ auth.currentUser() | json }}</pre>
 </section>
