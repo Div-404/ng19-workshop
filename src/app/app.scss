@@ -9,7 +9,25 @@
 //   --radius: 6px;
 //   --shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.15);
 // }
+.navlinkbar{
+  position: sticky;
+  top: 50;
+  z-index: 100;
 
+  display: flex;
+  align-items:start;
+  justify-content: space-between;
+
+  padding: 0.75rem 1.25rem;
+  background: linear-gradient(
+    135deg,
+    var(--primary),
+    var(--primary-dark)
+  );
+  color: var(--text-on-primary);
+  box-shadow: var(--shadow-sm);
+  
+}
 /* =========================
    Toolbar
    ========================= */
