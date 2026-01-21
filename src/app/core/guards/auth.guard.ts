@@ -5,7 +5,6 @@ export const authGuard:CanMatchFn = () => {
     const auth = inject(AuthService);
     const router = inject(Router);
     const loggedIn = auth.isLoggedIn();
-    console.log("Hey am i logged in", loggedIn);
     if(!loggedIn){
         return router.createUrlTree(['/login']);
     }

@@ -12,4 +12,7 @@ export class JsonDataService {
   getUsers(): Observable<User[]> {
     return this.http.get<User[]>(`${this.api}/users`);
   }
+  getProtectedData(): Observable<any> {
+  return this.http.get(`${this.api}/protected`);
+}
 }
