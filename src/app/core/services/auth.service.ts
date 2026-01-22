@@ -2,7 +2,7 @@ import { Injectable, signal } from "@angular/core";
 import { User } from "../../shared/models/user";
 import { HttpClient } from "@angular/common/http";
 import { Session } from "../../shared/models/session";
-import { catchError, map, of, tap } from "rxjs";
+import { catchError, map, of, tap, throwError } from "rxjs";
 
 @Injectable({providedIn: 'root'})
 export class AuthService{
@@ -42,28 +42,40 @@ export class AuthService{
         this.isLoggedIn.set(false);
         this.currentUser.set(null);
     }
-    login(email:string, password:string){
-        return this.http.get<User[]>(`${this.api}/users?email=${email}&password=${password}`)
-        .pipe(
-            map(users => users[0]),
-            tap(user =>{
-                if(!user) throw new Error('Invalid Credentials');
-                const session: Session = {
-                    userId: user.id!,
-                    token: this.fakeJwt(),
-                    expires: new Date(Date.now() + 24*60*60*1000).toISOString()
-                };
-                localStorage.setItem('session', JSON.stringify(session));
-                this.isLoggedIn.set(true);
-                this.currentUser.set(user);
-            }),
-            map(()=> true),
-            catchError(()=>{
-                this.logout();
-                return of(false);
-            })
-        )
-    }
+    login(email: string, password: string) {
+
+  return this.http
+    .get<User[]>(`${this.api}/users?email=${email}&password=${password}`)
+    .pipe(
+
+      map(users => users[0]),
+
+      tap(user => {
+        if (!user) throw new Error('Invalid Credentials');
+
+        const session: Session = {
+          userId: user.id!,
+          token: this.fakeJwt(),
+          expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString()
+        };
+
+        localStorage.setItem('session', JSON.stringify(session));
+
+        this.isLoggedIn.set(true);
+        this.currentUser.set(user);
+      }),
+
+      map(() => true),
+
+      catchError(err => {
+        this.logout();
+
+        // ✅ IMPORTANT: rethrow error
+        return throwError(() => err);
+      })
+
+    );
+}
 
     fakeJwt(){
         return 'fake-jwt-' + Math.random().toString(36).slice(2);

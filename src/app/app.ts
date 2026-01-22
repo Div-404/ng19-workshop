@@ -1,28 +1,51 @@
-import { Component, computed, effect, OnInit, signal } from '@angular/core';
+import { Component, computed, effect, inject, OnInit, signal } from '@angular/core';
 import { RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import { ToastComponent } from './shared/ui/toast/toast.component';
+import { GlobalErrorService } from './core/services/global-error.service';
+import { toSignal } from '@angular/core/rxjs-interop';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet,RouterLink],
+  imports: [RouterOutlet,RouterLink,ToastComponent],
   standalone: true,
   templateUrl: './app.html',
   // styleUrl: './app.scss'
   styleUrls: ['./app.scss'] 
 })
-export class App implements OnInit{
+export class App{
   protected title = 'ng19-workshop';
-  count = signal(0);
-  double = computed(()=> this.count()*2);
-  constructor(){
-    effect(()=>{
-      console.log("Effect count = ", this.count());
-    })
+count = signal(0);
+  double = computed(() => this.count() * 2);
+
+  public globalError = inject(GlobalErrorService);
+  toast = this.globalError.error;
+
+  private toastTimer: any;
+
+  constructor() {
+
+    effect(() => {
+
+      const msg = this.toast();
+
+      if (!msg) return;
+
+      clearTimeout(this.toastTimer);
+
+      this.toastTimer = setTimeout(() => {
+        this.globalError.clear();
+      }, 3000);
+
+    });
+
   }
-  ngOnInit(){
-    setTimeout(()=> this.increment(),200);
+
+  increment() {
+    this.count.update(v => v + 1);
   }
-  increment(){
-    this.count.update(v=>v+1);
-    console.log("Increment", this.count());
+
+  testError() {
+    throw new Error('Toast error working 🚀');
   }
+
 }

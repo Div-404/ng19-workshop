@@ -12,4 +12,15 @@
   <a style="cursor:pointer" routerLink="/login">Login</a>
   <a style="cursor:pointer" routerLink="/dashboard">Dashboard</a>
 </nav>
+<!-- <app-toast
+  [message]="toast() || ''"
+  (close)="toast.set('')">
+</app-toast> -->
+<app-toast
+  [message]="toast() || ''"
+  (close)="globalError.clear()">
+</app-toast>
+
+<button (click)="testError()">Trigger Error</button>
+
 <router-outlet></router-outlet>

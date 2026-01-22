@@ -58,13 +58,9 @@ export class Login {
   users = toSignal(inject(JsonDataService).getUsers(), { initialValue: [] });
 
   onLogin(payload: LoginPayload): void {
-    this.auth.login(payload.email, payload.password).subscribe(success => {
-      if (success) {
-        this.router.navigate(['/dashboard']);
-      } else {
-        alert('Invalid credentials');
-      }
-    });
+    this.auth.login(payload.email, payload.password).subscribe(() => {
+    this.router.navigate(['/dashboard']);
+  });
   }
   
 }
